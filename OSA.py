@@ -91,12 +91,63 @@ class OSA:
             self.osamain.write(f":SENSe:SWEep:SPEed {sweep_speed}")
         else:
             raise Exception(f"Invalid sweep mode! Sweep speeds are {self.sweep_speeds}")
-        
+
+    def set_sweep_step(self, sweep_step):
+        '''
+        Sets the sweep step of the wavelength sweep in nanometers.
+        '''
+        self.osamain.write(f":SENSE:SWEEP:STEP {sweep_step}NM")   
+    
+    def set_sweep_auto_points(self, auto_points):
+        '''
+        Enables automatic determination of sample size for wavelength step.
+        '''
+
+        self.osamain.write(f":SENSE:SWEEP:POINTS:AUTO {auto_points}")
+
+    def set_sweep_points(self, points):
+        '''
+        Sets sweep sample size for a wavelength sweep.
+        '''
+
+        self.osamain.write(f":SENSE:SWEEP:POINTS:AUTO {points}")
+    
     def set_resolution(self, resolution):
         '''
         This method sets the resolution of the OSA in nanometers.
         '''
         self.osamain.write(f":sens:band:resolution {resolution}nm")
+
+    def window_center_wavelength(self, wavelength):
+        '''
+        Sets the wavelength of the x axis on the display scale in nm.
+        '''
+        self.osamain.write(f":DISPLAY:TRACE:X:CENTER {wavelength}NM")
+
+    def set_window_span(self, span):
+        '''
+        Sets the wavelength span on the display window in nanometers.
+        '''
+        self.osamain.write(f":DISPLAY:TRACE:X:SPAN {span}NM")
+
+    def set_window_start(self, window_start):
+        '''
+        Sets the starting wavelength on the display in nanometers.
+        '''
+        self.osamain.write(f':DISPLAY:TRACE:X:START {window_start}NM')
+
+    def set_window_stop(self, window_stop):
+        '''
+        Sets the stopping wavelength on the display in nanometers.
+        '''
+        self.osamain.write(f':DISPLAY:TRACE:X:STOP {window_stop}NM')
+
+    def set_y_reference(self, reference):
+        '''
+        Sets the reference level of the y axis in the display, based on the 
+        current scale.
+        '''
+        self.osamain.write(f":DISPLAY:TRACE:Y1:RLEVEL {reference}")
 
     def get_single_trace(self, wavelength_start, wavelength_stop):
         '''
